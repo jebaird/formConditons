@@ -1,16 +1,19 @@
 /*
     jquery form conditions
-    allow the creatation of dynamic forms
+    allows you to show / hide elements on a form based on element values
     
     Jesse Baird <jebaird@gmail.com>
     jebaird.com
     3/17/2011
     
+    Dual licensed under the MIT (MIT-LICENSE.txt)
+    and GPL (GPL-LICENSE.txt) licenses.
+    
+    
     happy saint pats!
 
 */
 /*
-//move to jquery widget, cache form fields to speed it up
 
 // add support in outcome and rule for callback, this is for devs to use
 
