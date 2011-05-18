@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<meta name="author" content="jesse" />
+    <script type="text/javascript" src="../jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="../jquery-ui-1.8.1.custom.min.js"></script>
+    
+    <script type="text/javascript" src="jquery.jb.formcondtions.js"></script>
+    <title>Form Conditions</title>
+</head>
+
+<body>
+    <h1>form condtions</h1>
+    
+    <button class="addRule">Add Rule</button>
+    <button class="removeRule">Remove Rule</button>
+    
+    <form>
+    
+        <fieldset>
+            <legend>Contact Info</legend>
+            <div>
+                <label>first name</label><input type="text" name="firstname">
+            </div>
+            <div>
+                <label>last name</label><input type="text" name="lastname">
+            </div>
+            <div>
+                <label>email</label><input type="text" name="email">
+            </div>
+        </fieldset>
+        <fieldset>
+            <div>
+               <label>Would you like to provide more details?</label>
+               <input type="radio" name="detailsToggle" value="yes" checked="checked"/><label>yes</label>
+                <input type="radio" name="detailsToggle" value="no"/><label>no</label>
+            </div>
+            <div>
+            
+                <textarea name="details"></textarea>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Your preferences</legend>
+            <div>
+                <input type="checkbox" name="sendMeSpamToggle"/><label>would you like to be bombarded with spam?</label>
+            </div>
+            
+           <fieldset id="spamWrapper">
+                <legend>select your spam</legend>
+           </fieldset>
+           
+           <label>select your color</label>
+           <select name="color">
+                <option value="red">red</option>
+                <option value="green">green</option>
+                <option value="orange">orange</option>
+           </select>
+           
+           <div id="swatch"><br /></div>
+           
+            
+        </fieldset>
+        <input type="submit" value="submit"/>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $('form').formConditons({
+                conditions: [
+                    {
+                    rules:[
+                        {
+                            selector:'input[name=email]',
+                            operator: 'equal',
+                            value: ''
+                        }
+                    ],
+                    outcomes:[
+                        {
+                            action: function( $form ){
+                                $form.find('#spamWrapper').hide();
+                            }
+                        },
+                        {
+                            selector: ':checkbox[name=sendMeSpamToggle]',
+                            action: "hide"
+                        }
+                    ]
+                },
+                {
+                    rules:[
+                        {
+                            selector:'input[name=email]',
+                            operator: 'not-equal',
+                            value: ''
+                        }
+                    ],
+                    outcomes:[
+                        {
+                            action: function( $form ){
+                                $form.find('#spamWrapper').show();
+                            }
+                        },
+                        {
+                            selector: ':checkbox[name=sendMeSpamToggle]',
+                            action: "show"
+                        }
+                    ]
+                },
+                //show details checkboxs
+                {   
+                    rules: [
+                        {
+                            selector:':radio[name=detailsToggle][value=yes]',
+                            operator: 'checked'
+                        }
+                    ],
+                    outcomes:[
+                        {
+                            selector: 'textarea[name=details]',
+                            action: 'show'
+                        }
+                    ]
+                },
+                //hide the details textbox
+                {
+                   
+                    rules: [
+                        {
+                            selector:':radio[name=detailsToggle][value=no]',
+                            operator: 'checked'
+                        }
+                    ],
+                    outcomes:[
+                        {
+                            selector: 'textarea[name=details]',
+                            action: 'hide'
+                        }
+                    ]
+                },
+                
+                
+                
+                
+                ]
+            });
+            
+            
+            ///add remove rules teste
+            $('button.addRule').click(function(){
+                
+                $('form').formConditons('addCondition',{
+                    name: 'swatch',
+                    rules: [
+                        {
+                            selector: 'select[name=color]',
+                            operator: 'not-equal',
+                            value: ''
+                        }
+                    ],
+                    outcomes: [
+                        {
+                            selector: 'select[name=color]',
+                            action: function( $form, element ){
+                                console.log(element.val());
+                                $form.find('#swatch').css('background-color', element.val())
+                            }    
+                        }
+                    ]
+                });
+                /*
+                //color
+                 
+                */
+            });
+            
+            
+            $('.removeRule').click(function(){
+                $('form').formConditons('removeCondition','swatch');
+            });
+            
+             
+        });
+    </script>
+
+
+</body>
+</html>
