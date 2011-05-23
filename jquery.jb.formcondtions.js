@@ -37,6 +37,22 @@ $.widget('jb.formConditons',{
         action: 'hide',//string or function
         selector: ''
     },
+    /*
+     * build in outcome actions
+     * to add your own use this code
+     * $.extend($.jb.formConditons.prototype.outcomeActions,{
+     * 	'youractionname': function(){}
+     * })
+     */
+    outcomeActions: {
+    	show: function( form, element ){
+    		element.parent().show();
+    	},
+    	
+    	hide: function( form, element ){
+    		element.parent().hide();
+    	}
+    },
     _create: function(){
         var self = this,
         element = self.element,
@@ -46,6 +62,7 @@ $.widget('jb.formConditons',{
         cLen = conditions.length;
         
         //#### bind on change, add option to change this event lister
+        //like keup
         element.delegate(':input','change',function(){
             self._processor();
         
@@ -80,29 +97,15 @@ $.widget('jb.formConditons',{
             
             
             var target = ( outcome.selector ) ? element.find(outcome.selector) : undefined;
-        
-            
-            switch( type ){
-                case 'string':
-                    //show hide - use selector
-                    //console.log(outcome )
-                   
-                   // console.log((target))
-                    switch( outcome.action ){
-                        case 'hide':
-                            target.parent().hide();
-                            break;
-                        case 'show':
-                            target.parent().show();
-                            break;
-                    }
-                    
-                    break;
-                case 'function':
-                    
-                    outcome.action.apply(this,[ element, target ]);
-                    break;
+        	
+        	//TODO: clean this up, kina sloppy
+        	
+            if( type == 'string' ){
+            	this.outcomeActions[ outcome.action ].apply(this,[ element, target ]);
+            }else if( type == 'function'){
+            	outcome.action.apply(this,[ element, target ]);
             }
+         
         }
         
     },
