@@ -66,125 +66,81 @@
         </fieldset>
         <input type="submit" value="submit"/>
     </form>
-    <script type="text/javascript">
-        $(document).ready(function(){
-           $('form').formConditons({
-                conditions: [
-                    {
-                    rules:[
-                        {
-                            selector:'input[name=email]',
-                            operator: 'equal',
-                            value: ''
-                        }
-                    ],
-                    outcomes:[
-                        {
-                            action: function( $form ){
-                                $form.find('#spamWrapper').hide();
-                            }
-                        },
-                        {
-                            selector: ':checkbox[name=sendMeSpamToggle]',
-                            action: "hide"
-                        }
-                    ]
-                },
-                {
-                    rules:[
-                        {
-                            selector:'input[name=email]',
-                            operator: 'not-equal',
-                            value: ''
-                        }
-                    ],
-                    outcomes:[
-                        {
-                            action: function( $form ){
-                                $form.find('#spamWrapper').show();
-                            }
-                        },
-                        {
-                            selector: ':checkbox[name=sendMeSpamToggle]',
-                            action: "show"
-                        }
-                    ]
-                },
-                //show details checkboxs
-                {   
-                    rules: [
-                        {
-                            selector:':radio[name=detailsToggle][value=yes]',
-                            operator: 'checked'
-                        }
-                    ],
-                    outcomes:[
-                        {
-                            selector: 'textarea[name=details]',
-                            action: 'show'
-                        }
-                    ]
-                },
-                //hide the details textbox
-                {
-                   
-                    rules: [
-                        {
-                            selector:':radio[name=detailsToggle][value=no]',
-                            operator: 'checked'
-                        }
-                    ],
-                    outcomes:[
-                        {
-                            selector: 'textarea[name=details]',
-                            action: 'hide'
-                        }
-                    ]
-                },
-                
-                
-                
-                
-                ]
-            });
+<script type="text/javascript">
+$(document).ready(function(){
+	$('form').formConditons({
+    	conditions: [
+    		{
+    			name: 'togglespam',
+	    		rules: [
+	    			{
+	    				selector: 'input[name=email]',
+	    				operator: 'contains',
+	    				value: '@'
+	    			}
+	    		],
+	    		t: [
+	    			{
+	    				selector: 'input[name=sendMeSpamToggle], #spamWrapper',
+	    				action: 'show'
+	    			}
+	    		],
+	    		f: [
+	    			{
+	    				selector: 'input[name=sendMeSpamToggle], #spamWrapper',
+	    				action: 'hide'
+	    			}
+	    		]
+    		},
+    		{
+    			name: 'moredetails',
+    			rules: [
+    				{
+    					selector: ':radio[name=detailsToggle][value=yes]',
+    					operator: 'checked'
+    				}
+    			],
+    			t: [
+    				{
+    					selector: 'textarea[name=details]',
+    					action: 'show'
+    				}
+    			],
+    			f: [
+    				{
+    					selector: 'textarea[name=details]',
+    					action: 'hide'
+    				}
+    			]
+    		}
+    		
+    	]  
+	});
+
+   /* 
+    ///add remove rules teste
+    $('button.addRule').click(function(){
+        
+        $('form').formConditons('addCondition',{
+           conditions: [
+           	
+           ]
             
-            
-            ///add remove rules teste
-            $('button.addRule').click(function(){
-                
-                $('form').formConditons('addCondition',{
-                    name: 'swatch',
-                    rules: [
-                        {
-                            selector: 'select[name=color]',
-                            operator: 'not-equal',
-                            value: ''
-                        }
-                    ],
-                    outcomes: [
-                        {
-                            selector: 'select[name=color]',
-                            action: function( $form, element ){
-                                console.log(element.val());
-                                $form.find('#swatch').css('background-color', element.val())
-                            }    
-                        }
-                    ]
-                });
-                /*
-                //color
-                 
-                */
-            });
-            
-            
-            $('.removeRule').click(function(){
-                $('form').formConditons('removeCondition','swatch');
-            });
-            
-             
         });
-    </script>
+        /*
+        //color
+         
+        
+    });
+    
+    
+    $('.removeRule').click(function(){
+        $('form').formConditons('removeCondition','swatch');
+    });
+   */ 
+     
+});
+</script>
 
 
 </body>

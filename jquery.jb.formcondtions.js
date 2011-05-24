@@ -59,7 +59,12 @@ $.widget('jb.formConditons',{
         options = self.options,
         //#
         conditions = options.conditions,
+        
         cLen = conditions.length;
+        
+        //cache the last result of a rule
+        self.rulesLastResult = {};
+        
         
         //#### bind on change, add option to change this event lister
         //like keup
@@ -67,26 +72,41 @@ $.widget('jb.formConditons',{
             self._processor();
         
         })
-        .find( ":input" )
-        .trigger('change');
+       self._processor();
     },
     
     _processor: function(){
         var self = this,
         conditions = self.options.conditions,
-        ccLen = conditions.length;
+        ccLen = conditions.length,
+        lastResults = self.rulesLastResult;
         
        // console.log((conditions), ccLen)
         while( ccLen-- ){
-            if( self._checkRules( conditions[ ccLen ].rules ) ){
-                self._processOutcomes( conditions[ ccLen ].outcomes )
+        	
+        	var condition = conditions[ ccLen ],
+        	
+        	rulesResult = self._checkRules( conditions[ ccLen ].rules );
+            //TODO: track last result for this rule, if the last result is the same as rulesResult don't run the outcomes
+            
+            if( lastResults[ condition.name ] != rulesResult ){
+            	
+            	console.log(condition.name, ' is different than last result, running outcomes');
+            		
+            	if( rulesResult && condition['t'] != undefined ){
+	            	self._processOutcomes( condition['t'] );
+	            		
+	            }else if( rulesResult == false && condition['f'] != undefined ){
+	            	self._processOutcomes( condition['f'] );
+	            }
             }
+
             
-            
+           lastResults[ condition.name ] = rulesResult;
         }
     },
     
-    _processOutcomes: function( outcomes ){
+    _processOutcomes: function( outcomes, rulesResult ){
         var i = outcomes.length
         element = this.element;
         
@@ -132,8 +152,14 @@ $.widget('jb.formConditons',{
                     ret = target.is(':checked');
                     break;
                 case 'contains':
+                	var regEx = new RegExp( '('+ rule.value +')' ,'gi');
+                	//console.log('regluar expression ', regEx.test( val ))
+                	ret = regEx.test( val );
                     break;
                 case 'doesnt-contain':
+               		var regEx = new RegExp( '('+ rule.value +')','gi');
+                	//console.log('regluar expression doesnt contain', regEx.test( val ))
+                	ret = regEx.test( val );
                     break;
                 case 'starts-with':
                     break;
@@ -141,7 +167,7 @@ $.widget('jb.formConditons',{
                     break;
                  
             }
-            if(!ret){
+            if( ret == false ){
                 ruleIsTrue = false;
                 break;
             }
