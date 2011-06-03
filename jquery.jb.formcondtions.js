@@ -91,13 +91,13 @@ $.widget('jb.formConditons',{
             
             if( lastResults[ condition.name ] != rulesResult ){
             	
-            	console.log(condition.name, ' is different than last result, running outcomes');
+            	//console.log(condition.name, ' is different than last result, running outcomes');
             		
-            	if( rulesResult && condition['t'] != undefined ){
-	            	self._processOutcomes( condition['t'] );
+            	if( rulesResult && condition['tru'] != undefined ){
+	            	self._processOutcomes( condition['tru'] );
 	            		
-	            }else if( rulesResult == false && condition['f'] != undefined ){
-	            	self._processOutcomes( condition['f'] );
+	            }else if( rulesResult == false && condition['fal'] != undefined ){
+	            	self._processOutcomes( condition['fal'] );
 	            }
             }
 
