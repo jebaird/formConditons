@@ -3,7 +3,7 @@
     allows you to show / hide elements on a form based on element values
     
     Jesse Baird <jebaird@gmail.com>
-    jebaird.com
+   	http://jebaird.com/blog/formconditons-jquery-ui-widget-helps-you-create-dynamic-forms
     3/17/2011
     
     Dual licensed under the MIT (MIT-LICENSE.txt)
@@ -15,11 +15,7 @@
 */
 /*
 
-// add support in outcome and rule for callback, this is for devs to use
-
-    
-    function processOutCome(){}
-    // TODO add deferreds
+TODO: add support in outcome and rule for callback, 
 
 */
 (function($){
@@ -74,7 +70,9 @@ $.widget('jb.formConditons',{
         })
        self._processor();
     },
-    
+    /*
+     * this is where the magic happends
+     */
     _processor: function(){
         var self = this,
         conditions = self.options.conditions,
@@ -135,7 +133,8 @@ $.widget('jb.formConditons',{
         ruleIsTrue = true;
         while( i-- ){
             var rule = rules[ i ],
-            //todo cache selector
+            //TODO: cache selector
+            //TODO: move this this switch into diffent methods to allow override of operators
             target = $elem.find( rule.selector ),
             val = target.val(),
             
