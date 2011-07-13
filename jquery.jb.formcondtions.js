@@ -190,7 +190,7 @@ $.widget('jb.formConditons',{
         while( i-- ){
             //  console.log(conditions[ i ])
             if( conditions[ i ].name == name && typeof conditions[ i ].name != undefined){
-                console.log((i))
+                //console.log((i))
                 this.options.conditions = conditions.slice( i,1 );
             }
         }
