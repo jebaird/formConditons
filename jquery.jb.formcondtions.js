@@ -3,7 +3,7 @@
     allows you to show / hide elements on a form based on element values
     
     Jesse Baird <jebaird@gmail.com>
-   	http://jebaird.com/blog/formconditons-jquery-ui-widget-helps-you-create-dynamic-forms
+   	http://jebaird.com/blog/formconditons-jquery-ui-widget-assists-you-create-dynamic-forms
     3/17/2011
     
     Dual licensed under the MIT (MIT-LICENSE.txt)
