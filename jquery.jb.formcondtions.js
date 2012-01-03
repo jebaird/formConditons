@@ -150,6 +150,9 @@ $.widget('jb.formConditons',{
                 case 'checked':
                     ret = target.is(':checked');
                     break;
+                case 'not-checked':
+                    ret = target.is(':not(:checked)');
+                    break;
                 case 'contains':
                 	var regEx = new RegExp( '('+ rule.value +')' ,'gi');
                 	//console.log('regluar expression ', regEx.test( val ))
