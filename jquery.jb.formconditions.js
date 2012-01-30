@@ -199,7 +199,7 @@ $.widget('jb.formConditons',{
         }
     },
     
-    destory: function(){
+    destroy: function(){
         
     }    
 });
