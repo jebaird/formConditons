@@ -161,7 +161,7 @@ $.widget('jb.formConditons',{
                 case 'doesnt-contain':
                		var regEx = new RegExp( '('+ rule.value +')','gi');
                 	//console.log('regluar expression doesnt contain', regEx.test( val ))
-                	ret = regEx.test( val );
+                	ret = !(regEx.test( val ));
                     break;
                 case 'starts-with':
                     break;
