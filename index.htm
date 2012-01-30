@@ -7,7 +7,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.js"></script>
     
-    <script type="text/javascript" src="https://raw.github.com/jebaird/formConditons/master/jquery.jb.formcondtions.js"></script>
+    <script type="text/javascript" src="jquery.jb.formcondtions.js"></script>
     <title>Form Conditions</title>
 </head>
 
@@ -27,6 +27,9 @@
             <legend>Contact Info</legend>
             <div>
                 <label>first name</label><input type="text" name="firstname">
+            </div>
+            <div>
+            	<div id="yournameisjesse">Your Name is Jesse</div>
             </div>
             <div>
                 <label>last name</label><input type="text" name="lastname">
@@ -74,6 +77,28 @@
 $(document).ready(function(){
 	$('form').formConditons({
     	conditions: [
+    		{
+    			name: 'firstname test',
+    			rules: [
+    				{
+    					selector: 'input[name=firstname]',
+    					operator: 'equal',
+    					value: 'Jesse'
+    				}
+    			],
+    			tru:[
+    				{
+	    				selector: '#yournameisjesse',
+	    				action: 'show'
+	    			}
+    			],
+    			fal:[
+    				{
+	    				selector: '#yournameisjesse',
+	    				action: 'hide'
+	    			}
+    			]
+    		},
     		{
     			name: 'togglespam',
 	    		rules: [

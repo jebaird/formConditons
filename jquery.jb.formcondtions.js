@@ -133,19 +133,19 @@ $.widget('jb.formConditons',{
         ruleIsTrue = true;
         while( i-- ){
             var rule = rules[ i ],
-            //TODO: cache selector
-            //TODO: move this this switch into diffent methods to allow override of operators
-            target = $elem.find( rule.selector ),
-            val = target.val(),
-            
-            ret = true;
+	            //TODO: cache selector
+	            //TODO: move this this switch into diffent methods to allow override of operators
+	            target = $elem.find( rule.selector ),
+	            val = target.val(),
+            	ret = true;
             
             switch(rule.operator){
+            	//convert the value to string so we dont get type errors for ints
                 case 'equal':
-                    ret = ( val == rule.value ) ? true : false;
+                    ret = ( String.prototype.toLowerCase.apply( val ) == String.prototype.toLowerCase.apply( rule.value )  ) ? true : false;
                     break;
                 case 'not-equal':
-                    ret = ( val != rule.value ) ? true : false;
+                    ret = ( String.prototype.toLowerCase.apply( val ) != String.prototype.toLowerCase.apply( rule.value )  ) ? true : false;
                     break;
                 case 'checked':
                     ret = target.is(':checked');
