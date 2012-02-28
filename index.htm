@@ -7,7 +7,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.js"></script>
     
-    <script type="text/javascript" src="jquery.jb.formcondtions.js"></script>
+    <script type="text/javascript" src="jquery.jb.formconditions.js"></script>
     <title>Form Conditions</title>
 </head>
 
@@ -73,103 +73,8 @@
         </fieldset>
         <input type="submit" value="submit"/>
     </form>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('form').formConditons({
-    	conditions: [
-    		{
-    			name: 'firstname test',
-    			rules: [
-    				{
-    					selector: 'input[name=firstname]',
-    					operator: 'equal',
-    					value: 'Jesse'
-    				}
-    			],
-    			tru:[
-    				{
-	    				selector: '#yournameisjesse',
-	    				action: 'show'
-	    			}
-    			],
-    			fal:[
-    				{
-	    				selector: '#yournameisjesse',
-	    				action: 'hide'
-	    			}
-    			]
-    		},
-    		{
-    			name: 'togglespam',
-	    		rules: [
-	    			{
-	    				selector: 'input[name=email]',
-	    				operator: 'contains',
-	    				value: '@'
-	    			}
-	    		],
-	    		tru: [
-	    			{
-	    				selector: 'input[name=sendMeSpamToggle], #spamWrapper',
-	    				action: 'show'
-	    			}
-	    		],
-	    		fal: [
-	    			{
-	    				selector: 'input[name=sendMeSpamToggle], #spamWrapper',
-	    				action: 'hide'
-	    			}
-	    		]
-    		},
-    		{
-    			name: 'moredetails',
-    			rules: [
-    				{
-    					selector: ':radio[name=detailsToggle][value=yes]',
-    					operator: 'checked'
-    				}
-    			],
-    			tru: [
-    				{
-    					selector: 'textarea[name=details]',
-    					action: 'show'
-    				}
-    			],
-    			fal: [
-    				{
-    					selector: 'textarea[name=details]',
-    					action: 'hide'
-    				}
-    			]
-    		}
-    		
-    	]  
-	});
-
-   /* 
-    ///add remove rules teste
-    $('button.addRule').click(function(){
-        
-        $('form').formConditons('addCondition',{
-           conditions: [
-           	
-           ]
-            
-        });
-        /*
-        //color
-         
-        
-    });
     
-    
-    $('.removeRule').click(function(){
-        $('form').formConditons('removeCondition','swatch');
-    });
-   */ 
-     
-});
-</script>
+<script type="text/javascript" src="demo.js"></script>
 
 
 </body>

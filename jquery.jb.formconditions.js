@@ -65,9 +65,11 @@ $.widget('jb.formConditons',{
         //#### bind on change, add option to change this event lister
         //like keup
         element.delegate(':input','change',function(){
+            
             self._processor();
         
         })
+        
        self._processor();
     },
     /*
