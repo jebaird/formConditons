@@ -20,7 +20,14 @@ TODO: add support in outcome and rule for callback,
 */
 (function($){
     
-$.widget('jb.formConditons',{
+    //helpers
+    var toLower = function(  ){
+    		return String.prototype.toLowerCase.apply( string )
+    	}
+    
+    
+    
+$.widget('jb.formConditions',{
     defaults: {
         conditions: []
     },
@@ -29,6 +36,30 @@ $.widget('jb.formConditons',{
         operator: '',//string equal to value or function
         value: ''
     },
+    
+    operators: {
+    	//this is this widget instance
+    	'equal': function( val, rule, element ){
+    		return ( toLower( val ) == toLower( rule.value )  ) ? true : false;
+    	},
+    	'not-equal': function( val, rule, element ){
+    		return !$.jb.formConditions.prototype.operators.equal.apply( this, arguments )
+    	},
+    	'checked': function( val, rule, element ){
+    		return element.is(':checked')
+    	},
+    	'not-checked': function( val, rule, element ){
+    		return !$.jb.formConditions.prototype.operators.checked.apply( this, arguments )
+    	},
+    	'contains': function( val, rule, element ){
+    		var regEx = new RegExp( '('+ rule.value +')' ,'gi');
+    		return regEx.test( val );	
+    	},
+    	'doesnt-contain': function( val, rule, element ){
+    		return !$.jb.formConditions.prototype.operators.contains.apply( this, arguments )
+    	}
+    },
+    
     outcomeDefaults: {
         action: 'hide',//string or function
         selector: ''
@@ -130,47 +161,28 @@ $.widget('jb.formConditons',{
         
     },
     _checkRules: function( rules ){
-        var i = rules.length,
-        $elem = this.element,
-        ruleIsTrue = true;
+    	var i = rules.length,
+        	$elem = this.element,
+        	ruleIsTrue = true;
         while( i-- ){
-            var rule = rules[ i ],
-	            //TODO: cache selector
-	            //TODO: move this this switch into diffent methods to allow override of operators
-	            target = $elem.find( rule.selector ),
-	            val = target.val(),
-            	ret = true;
-            
-            switch(rule.operator){
-            	//convert the value to string so we dont get type errors for ints
-                case 'equal':
-                    ret = ( String.prototype.toLowerCase.apply( val ) == String.prototype.toLowerCase.apply( rule.value )  ) ? true : false;
-                    break;
-                case 'not-equal':
-                    ret = ( String.prototype.toLowerCase.apply( val ) != String.prototype.toLowerCase.apply( rule.value )  ) ? true : false;
-                    break;
-                case 'checked':
-                    ret = target.is(':checked');
-                    break;
-                case 'not-checked':
-                    ret = target.is(':not(:checked)');
-                    break;
-                case 'contains':
-                	var regEx = new RegExp( '('+ rule.value +')' ,'gi');
-                	//console.log('regluar expression ', regEx.test( val ))
-                	ret = regEx.test( val );
-                    break;
-                case 'doesnt-contain':
-               		var regEx = new RegExp( '('+ rule.value +')','gi');
-                	//console.log('regluar expression doesnt contain', regEx.test( val ))
-                	ret = !(regEx.test( val ));
-                    break;
-                case 'starts-with':
-                    break;
-                case 'ends-with':
-                    break;
-                 
+        	var rule = rules[ i ],
+        		target = $elem.find( rule.selector ),
+        		operator = $.jb.formConditions.prototype.operators[ rule.operator ];
+        		
+        	//target isnt in the form	
+        	if( target.length == 0 ){
+        		continue;
+        	}
+        	
+        	
+            	
+            if(  operator == undefined ){
+            	cosnole.error(rule.operator, ' is undefined ')		
             }
+            
+            var val = target.val(),
+            	ret = operator.apply( this, [ val, rule, target ]);
+            
             if( ret == false ){
                 ruleIsTrue = false;
                 break;

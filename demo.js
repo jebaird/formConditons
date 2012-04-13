@@ -5,7 +5,7 @@
 
 $( document ).ready(function(){
 	
-	$('form').formConditons({
+	$('form').formConditions({
     	conditions: [
     		{
     			name: 'firstname test',
