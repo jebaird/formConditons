@@ -21,7 +21,7 @@ TODO: add support in outcome and rule for callback,
 (function($){
     
     //helpers
-    var toLower = function(  ){
+    var toLower = function( string ){
     		return String.prototype.toLowerCase.apply( string )
     	}
     
@@ -51,6 +51,7 @@ $.widget('jb.formConditions',{
     	'not-checked': function( val, rule, element ){
     		return !$.jb.formConditions.prototype.operators.checked.apply( this, arguments )
     	},
+    	//TODO: add support for arrays and objects
     	'contains': function( val, rule, element ){
     		var regEx = new RegExp( '('+ rule.value +')' ,'gi');
     		return regEx.test( val );	
