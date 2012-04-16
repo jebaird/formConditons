@@ -199,17 +199,12 @@ $.widget('jb.formConditions',{
         this.options.conditions.push( c );
        
     },
+    
     removeCondition: function( name ){
-        var conditions = this.options.conditions,
-        	i = conditions.length;
+         this.options.conditions = $.map( this.options.conditions, function( condition ){
+        	return ( condition.name == name && typeof condition.name != undefined ) ? null : condition;
+        })
         
-        while( i-- ){
-            //  console.log(conditions[ i ])
-            if( conditions[ i ].name == name && typeof conditions[ i ].name != undefined){
-                //console.log((i))
-                this.options.conditions = conditions.slice( i,1 );
-            }
-        }
     },
     
     destroy: function(){
