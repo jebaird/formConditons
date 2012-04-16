@@ -193,9 +193,8 @@ $.widget('jb.formConditions',{
     
     addCondition: function( c ){
         //run condition before we push it on to the stack
-        if( this._checkRules( c.rules )){
-            this._processOutcomes( c.outcomes );
-        }
+        this._processOutcomes( ( this._checkRules( c.rules ) ) ? c.tru : c.fal );
+        
         
         this.options.conditions.push( c );
        
@@ -214,7 +213,7 @@ $.widget('jb.formConditions',{
     },
     
     destroy: function(){
-        this.element.undelegate('change.formConditions')
+        this.element.undelegate('.formConditions')
     }    
 });
     
