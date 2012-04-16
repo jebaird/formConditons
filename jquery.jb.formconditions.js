@@ -82,20 +82,20 @@ $.widget('jb.formConditions',{
     },
     _create: function(){
         var self = this,
-        element = self.element,
-        options = self.options,
-        //#
-        conditions = options.conditions,
-        
-        cLen = conditions.length;
-        
-        //cache the last result of a rule
-        self.rulesLastResult = {};
+	        element = self.element,
+	        options = self.options,
+	        //#
+	        conditions = options.conditions,
+	        
+	        cLen = conditions.length;
+	        
+	        //cache the last result of a rule
+	        self.rulesLastResult = {};
         
         
         //#### bind on change, add option to change this event lister
         //like keup
-        element.delegate(':input','change',function(){
+        element.delegate(':input','change.formConditions',function(){
             
             self._processor();
         
@@ -108,16 +108,16 @@ $.widget('jb.formConditions',{
      */
     _processor: function(){
         var self = this,
-        conditions = self.options.conditions,
-        ccLen = conditions.length,
-        lastResults = self.rulesLastResult;
+	        conditions = self.options.conditions,
+	        ccLen = conditions.length,
+	        lastResults = self.rulesLastResult;
         
        // console.log((conditions), ccLen)
         while( ccLen-- ){
         	
         	var condition = conditions[ ccLen ],
         	
-        	rulesResult = self._checkRules( conditions[ ccLen ].rules );
+        		rulesResult = self._checkRules( conditions[ ccLen ].rules );
             //TODO: track last result for this rule, if the last result is the same as rulesResult don't run the outcomes
             
             if( lastResults[ condition.name ] != rulesResult ){
@@ -139,11 +139,11 @@ $.widget('jb.formConditions',{
     
     _processOutcomes: function( outcomes, rulesResult ){
         var i = outcomes.length
-        element = this.element;
+        	element = this.element;
         
         while( i-- ){
             var outcome = outcomes[ i ],
-            type = typeof outcome.action;
+            	type = typeof outcome.action;
             //console.log('type',type)
             
             
@@ -173,9 +173,8 @@ $.widget('jb.formConditions',{
         	if( target.length == 0 ){
         		continue;
         	}
-        	
-        	
-            	
+
+
             if(  operator == undefined ){
             	cosnole.error(rule.operator, ' is undefined ')		
             }
@@ -202,7 +201,7 @@ $.widget('jb.formConditions',{
     },
     removeCondition: function( name ){
         var conditions = this.options.conditions,
-        i = conditions.length;
+        	i = conditions.length;
         
         while( i-- ){
             //  console.log(conditions[ i ])
@@ -214,7 +213,7 @@ $.widget('jb.formConditions',{
     },
     
     destroy: function(){
-        
+        this.element.undelegate('change.formConditions')
     }    
 });
     
