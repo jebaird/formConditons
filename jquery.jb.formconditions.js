@@ -28,7 +28,12 @@ TODO: add support in outcome and rule for callback,
     
     
 $.widget('jb.formConditions',{
-    defaults: {
+    options: {
+    	//applied when the outcomes are processed, return null to skip processing
+    	outcomeActionMutator: function( outcome, rulesResult ){
+    		return outcome.action;
+    	},
+    	
         conditions: []
     },
     ruleDefaults: {
@@ -125,10 +130,10 @@ $.widget('jb.formConditions',{
             	//console.log(condition.name, ' is different than last result, running outcomes');
             		
             	if( rulesResult == true && condition['tru'] != undefined ){
-	            	self._processOutcomes( condition['tru'] );
+	            	self._processOutcomes( condition['tru'], rulesResult );
 	            		
 	            }else if( rulesResult == false && condition['fal'] != undefined ){
-	            	self._processOutcomes( condition['fal'] );
+	            	self._processOutcomes( condition['fal'], rulesResult );
 	            }
             }
 
@@ -140,17 +145,21 @@ $.widget('jb.formConditions',{
     _processOutcomes: function( outcomes, rulesResult ){
         var i = outcomes.length
         	element = this.element;
-        
+
         while( i-- ){
             var outcome = outcomes[ i ],
             	type = typeof outcome.action,
-            	target = ( outcome.selector ) ? element.find( outcome.selector ) : undefined;
-        	
-        	
+            	target = ( outcome.selector ) ? element.find( outcome.selector ) : undefined,
+            	//use the mutator
+            	action = this.options.outcomeActionMutator.apply( this, [ outcome, rulesResult ] );
+            	//if we return null skip the processing
+            	if( action === null ){
+            		continue;
+            	}
         	
         	
             if( type == 'string' ){
-            	this.outcomeActions[ outcome.action ].apply(this,[ target ]);
+            	this.outcomeActions[ action ].apply(this,[ target ]);
             }else if( type == 'function'){
             	outcome.action.apply(this,[ target ]);
             }

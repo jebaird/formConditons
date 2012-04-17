@@ -35,7 +35,6 @@
 							.data('formConditions')
 		},
 		teardown: function(){
-			console.log( this.widget )
 			this.widget.destroy();
 		}
 	});		
@@ -61,6 +60,8 @@
 		
 		equal($('#yournameisjesse').is(':visible'), false, 'rule ran ran _processor, ran fal')
 	})
+
+
 
 	
 	test('addCondition and remove', function(){
