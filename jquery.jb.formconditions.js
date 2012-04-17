@@ -36,7 +36,27 @@ $.widget('jb.formConditions',{
         operator: '',//string equal to value or function
         value: ''
     },
-    
+
+    outcomeDefaults: {
+        action: 'hide',//string or function
+        selector: ''
+    },
+    /*
+     * build in outcome actions
+     * to add your own use this code
+     * $.extend($.jb.formConditons.prototype.outcomeActions,{
+     * 	'youractionname': function(){}
+     * })
+     */
+    outcomeActions: {
+    	show: function( form, element ){
+    		element.parent().show();
+    	},
+    	
+    	hide: function( form, element ){
+    		element.parent().hide();
+    	}
+    },
     operators: {
     	//this is this widget instance
     	'equal': function( val, rule, element ){
@@ -58,27 +78,6 @@ $.widget('jb.formConditions',{
     	},
     	'doesnt-contain': function( val, rule, element ){
     		return !$.jb.formConditions.prototype.operators.contains.apply( this, arguments )
-    	}
-    },
-    
-    outcomeDefaults: {
-        action: 'hide',//string or function
-        selector: ''
-    },
-    /*
-     * build in outcome actions
-     * to add your own use this code
-     * $.extend($.jb.formConditons.prototype.outcomeActions,{
-     * 	'youractionname': function(){}
-     * })
-     */
-    outcomeActions: {
-    	show: function( form, element ){
-    		element.parent().show();
-    	},
-    	
-    	hide: function( form, element ){
-    		element.parent().hide();
     	}
     },
     _create: function(){
