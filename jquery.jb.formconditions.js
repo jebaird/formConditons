@@ -123,19 +123,14 @@ $.widget('jb.formConditions',{
         	var condition = conditions[ ccLen ],
         	
         		rulesResult = self._checkRules( conditions[ ccLen ].rules );
-            //TODO: track last result for this rule, if the last result is the same as rulesResult don't run the outcomes
             
-            if( lastResults[ condition.name ] != rulesResult ){
-            	
-            	//console.log(condition.name, ' is different than last result, running outcomes');
+        	if( rulesResult == true && condition['tru'] != undefined ){
+            	self._processOutcomes( condition['tru'], rulesResult );
             		
-            	if( rulesResult == true && condition['tru'] != undefined ){
-	            	self._processOutcomes( condition['tru'], rulesResult );
-	            		
-	            }else if( rulesResult == false && condition['fal'] != undefined ){
-	            	self._processOutcomes( condition['fal'], rulesResult );
-	            }
+            }else if( rulesResult == false && condition['fal'] != undefined ){
+            	self._processOutcomes( condition['fal'], rulesResult );
             }
+     
 
             
            lastResults[ condition.name ] = rulesResult;
