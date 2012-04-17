@@ -44,16 +44,16 @@ $.widget('jb.formConditions',{
     /*
      * build in outcome actions
      * to add your own use this code
-     * $.extend($.jb.formConditons.prototype.outcomeActions,{
+     * $.extend($.jb.formConditions.prototype.outcomeActions,{
      * 	'youractionname': function(){}
      * })
      */
     outcomeActions: {
-    	show: function( form, element ){
+    	show: function( element ){
     		element.parent().show();
     	},
     	
-    	hide: function( form, element ){
+    	hide: function( element ){
     		element.parent().hide();
     	}
     },
@@ -152,9 +152,9 @@ $.widget('jb.formConditions',{
         	//TODO: clean this up, kina sloppy
         	
             if( type == 'string' ){
-            	this.outcomeActions[ outcome.action ].apply(this,[ element, target ]);
+            	this.outcomeActions[ outcome.action ].apply(this,[ target ]);
             }else if( type == 'function'){
-            	outcome.action.apply(this,[ element, target ]);
+            	outcome.action.apply(this,[ target ]);
             }
          
         }
