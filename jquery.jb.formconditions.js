@@ -34,7 +34,7 @@ $.widget('jb.formConditions',{
     		return outcome.action;
     	},
     	//run the processor on these events
-    	inputEvent: 'change blur',
+    	inputEvent: 'blur',
         
         conditions: []
     },
