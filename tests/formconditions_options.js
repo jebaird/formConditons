@@ -40,14 +40,14 @@
 	
 	//test operators
 	test('outcomeActionMutator', function(){
-		console.log( this )
+
 		var hasRun = false;
 		
 		this.widget.option('outcomeActionMutator', function( outcome, result ){
 			hasRun = true
 			return outcome.action;
 		})
-		console.log( this.widget )
+
 		this.widget._processOutcomes([{
 							    		selector: '#yournameisjesse',
 							    		action: 'hide'
