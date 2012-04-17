@@ -124,7 +124,7 @@ $.widget('jb.formConditions',{
             	
             	//console.log(condition.name, ' is different than last result, running outcomes');
             		
-            	if( rulesResult && condition['tru'] != undefined ){
+            	if( rulesResult == true && condition['tru'] != undefined ){
 	            	self._processOutcomes( condition['tru'] );
 	            		
 	            }else if( rulesResult == false && condition['fal'] != undefined ){
@@ -143,13 +143,11 @@ $.widget('jb.formConditions',{
         
         while( i-- ){
             var outcome = outcomes[ i ],
-            	type = typeof outcome.action;
-            //console.log('type',type)
-            
-            
-            var target = ( outcome.selector ) ? element.find(outcome.selector) : undefined;
+            	type = typeof outcome.action,
+            	target = ( outcome.selector ) ? element.find( outcome.selector ) : undefined;
         	
-        	//TODO: clean this up, kina sloppy
+        	
+        	
         	
             if( type == 'string' ){
             	this.outcomeActions[ outcome.action ].apply(this,[ target ]);
