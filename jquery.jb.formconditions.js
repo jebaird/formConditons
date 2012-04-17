@@ -33,7 +33,9 @@ $.widget('jb.formConditions',{
     	outcomeActionMutator: function( outcome, rulesResult ){
     		return outcome.action;
     	},
-    	
+    	//run the processor on these events
+    	inputEvent: 'change blur',
+        
         conditions: []
     },
     ruleDefaults: {
@@ -100,7 +102,7 @@ $.widget('jb.formConditions',{
         
         //#### bind on change, add option to change this event lister
         //like keup
-        element.delegate(':input','change.formConditions',function(){
+        element.delegate(':input',(this.options.inputEvent +' ').split(' ').join('.formConditions '),function(){
             
             self._processor();
         
