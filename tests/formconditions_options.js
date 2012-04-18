@@ -44,16 +44,41 @@
 		var hasRun = false;
 		
 		this.widget.option('outcomeActionMutator', function( outcome, result ){
-			hasRun = true
+			hasRun = true;
+			if( outcome.action == 'show' ){
+				return 'hide';	
+			}
 			return outcome.action;
 		})
 
 		this.widget._processOutcomes([{
 							    		selector: '#yournameisjesse',
-							    		action: 'hide'
+							    		action: 'show'
 							    	}], true);
 		
 		equal( hasRun, true, 'outcomeActionMutator called when outcome is processed')
+		
+		
+		
+	})
+
+	test('outcomeActionMutator - return null skip outcome', function(){
+
+		var hasRun = false;
+		
+		this.widget.option('outcomeActionMutator', function( outcome, result ){
+			return null;
+		})
+
+		this.widget._processOutcomes([{
+							    		selector: '#yournameisjesse',
+							    		action: function(){
+							    			
+							    			hasRun = true;
+							    		}
+							    	}], true);
+		
+		equal( hasRun, false, 'outcomeActionMutator outcome is not processed when mutator returns null')
 		
 		
 		
