@@ -116,15 +116,13 @@ $.widget('jb.formConditions',{
     _processor: function(){
         var self = this,
 	        conditions = self.options.conditions,
-	        ccLen = conditions.length,
 	        lastResults = self.rulesLastResult;
         
-       // console.log((conditions), ccLen)
-        while( ccLen-- ){
+        for( var i = 0; i < conditions.length; i ++ ){
         	
-        	var condition = conditions[ ccLen ],
+        	var condition = conditions[ i ],
         	
-        		rulesResult = self._checkRules( conditions[ ccLen ].rules );
+        		rulesResult = self._checkRules( conditions[ i ].rules );
             
         	if( rulesResult == true && condition['tru'] != undefined ){
             	self._processOutcomes( condition['tru'], rulesResult );
@@ -140,12 +138,10 @@ $.widget('jb.formConditions',{
     },
     
     _processOutcomes: function( outcomes, rulesResult ){
-        var i = outcomes.length
-        	element = this.element;
+        var element = this.element;
 
-        while( i-- ){
+        for( var i = 0; i < outcomes.length; i++ ){
             var outcome = outcomes[ i ],
-            	type = typeof outcome.action,
             	target = ( outcome.selector ) ? element.find( outcome.selector ) : undefined,
             	//use the mutator
             	action = this.options.outcomeActionMutator.apply( this, [ outcome, rulesResult ] );
@@ -154,6 +150,7 @@ $.widget('jb.formConditions',{
             		continue;
             	}
         	
+        	var type = typeof action;
         	
             if( type == 'string' ){
             	this.outcomeActions[ action ].apply(this,[ target ]);
