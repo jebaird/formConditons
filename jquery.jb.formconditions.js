@@ -171,10 +171,8 @@ $.widget('jb.formConditions',{
         
     },
     _checkRules: function( rules ){
-    	var i = rules.length,
-        	$elem = this.element,
-        	ruleIsTrue = true;
-        while( i-- ){
+
+        for( var i = 0, $elem = this.element, ruleIsTrue = true; i < rules.length; i++ ){
         	var rule = rules[ i ],
         		target = $elem.find( rule.selector ),
         		operator = $.jb.formConditions.prototype.operators[ rule.operator ];
