@@ -33,6 +33,23 @@ $.widget('jb.formConditions',{
     	outcomeActionMutator: function( outcome, rulesResult ){
     		return outcome.action;
     	},
+    	/*
+    	 * called after the rules are checked, this, an instance
+    	 * can be used to change how the outcomes are processed
+    	 * like if you wanted to invert every rule with out supplying the inverse
+    	 */
+    	processorMutator: function( condition, rulesResult ){
+    		
+    		if( rulesResult == true && condition['tru'] != undefined ){
+    			
+    			this._processOutcomes( condition['tru'], rulesResult );
+    			
+    		}else if( rulesResult == false && condition['fal'] != undefined ){
+            	
+            	this._processOutcomes( condition['fal'], rulesResult );
+            
+            }
+    	},
     	//run the processor on these events
     	inputEvent: 'blur',
         
@@ -121,18 +138,10 @@ $.widget('jb.formConditions',{
         for( var i = 0; i < conditions.length; i ++ ){
         	
         	var condition = conditions[ i ],
-        	
         		rulesResult = self._checkRules( conditions[ i ].rules );
             
-        	if( rulesResult == true && condition['tru'] != undefined ){
-            	self._processOutcomes( condition['tru'], rulesResult );
-            		
-            }else if( rulesResult == false && condition['fal'] != undefined ){
-            	self._processOutcomes( condition['fal'], rulesResult );
-            }
-     
-
-            
+        	this.options.processorMutator.apply( this, [ condition, rulesResult ] );
+        	
            lastResults[ condition.name ] = rulesResult;
         }
     },
