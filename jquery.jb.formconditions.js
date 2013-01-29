@@ -156,7 +156,6 @@ $.widget('jb.formConditions',{
             	action = this.options.outcomeActionMutator.apply( this, [ outcome, rulesResult ] );
             	//if we return null skip the processing
             	if( action === null ){
-            		console.log( 'action is null ')
             		continue;
             	}
         	
