@@ -117,8 +117,8 @@ $.widget('jb.formConditions',{
 	        self.rulesLastResult = {};
         
         
-        //#### bind on change, add option to change this event lister
-        //like keup
+        //#### bind on change
+        //like keyup
         element.delegate(':input',(this.options.inputEvent +' ').split(' ').join('.formConditions '),function(){
             
             self._processor();
@@ -128,7 +128,7 @@ $.widget('jb.formConditions',{
        self._processor();
     },
     /*
-     * this is where the magic happends
+     * this is where the magic happens
      */
     _processor: function(){
         var self = this,
@@ -156,15 +156,16 @@ $.widget('jb.formConditions',{
             	action = this.options.outcomeActionMutator.apply( this, [ outcome, rulesResult ] );
             	//if we return null skip the processing
             	if( action === null ){
+            		console.log( 'action is null ')
             		continue;
             	}
         	
         	var type = typeof action;
-        	
+
             if( type == 'string' ){
             	this.outcomeActions[ action ].apply(this,[ target ]);
             }else if( type == 'function'){
-            	outcome.action.apply(this,[ target ]);
+            	action.apply(this,[ target ]);
             }
          
         }
@@ -177,14 +178,14 @@ $.widget('jb.formConditions',{
         		target = $elem.find( rule.selector ),
         		operator = $.jb.formConditions.prototype.operators[ rule.operator ];
         		
-        	//target isnt in the form	
+        	//target isn't in the form	
         	if( target.length == 0 ){
         		continue;
         	}
 
 
             if(  operator == undefined ){
-            	cosnole.error(rule.operator, ' is undefined ')		
+            	console.error(' rule.operator is undefined ')		
             }
             
             var val = target.val(),
