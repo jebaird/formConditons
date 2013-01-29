@@ -84,5 +84,23 @@
 		
 	})
 	
+	test('outcomeActionMutator - if action if func it gets called', function(){
+
+		var hasRun = false;
+
+		this.widget._processOutcomes([{
+							    		selector: '#yournameisjesse',
+							    		action: function(){
+							    			
+							    			hasRun = true;
+							    		}
+							    	}], true);
+		
+		equal( hasRun, true, 'outcomeActionMutator outcome action is called')
+		
+		
+		
+	})
+	
 
 })( jQuery );
