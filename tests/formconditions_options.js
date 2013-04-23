@@ -40,20 +40,23 @@
 	
 	//test operators
 	test('outcomeActionMutator', function(){
-
+		expect( 1)
 		var hasRun = false;
-		
+		stop();
 		this.widget.option('outcomeActionMutator', function( outcome, result ){
-			hasRun = true;
+			
 			if( outcome.action == 'show' ){
 				return 'hide';	
 			}
+			start()
 			return outcome.action;
 		})
 
 		this.widget._processOutcomes([{
 							    		selector: '#yournameisjesse',
-							    		action: 'show'
+							    		action: function(){
+							    			hasRun = true;
+							    		}
 							    	}], true);
 		
 		equal( hasRun, true, 'outcomeActionMutator called when outcome is processed')
