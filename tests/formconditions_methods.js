@@ -29,6 +29,23 @@
 							    				action: 'hide'
 							    			}
 						    			]
+						    		},
+						    		{
+						    			name: 'checkbox test',
+						    			rules: [
+						    					{
+						    						selector: '[name=sendMeSpamToggle]',
+						    						operator: 'not-checked',
+						    						value: ''
+						    					}
+						    				],
+						    				tru: [
+						    					{
+						    						selector: '#spamWrapper',
+						    						action: 'hide'
+						    					}
+						    			
+						    				]
 						    		}
 						    	]
 							})
@@ -45,6 +62,8 @@
 	})
 	
 	test('_processor', function(){
+		expect(3)
+		
 		var widget = this.widget
 		
 		var target = widget.element.find("input[name=firstname]")
@@ -59,12 +78,21 @@
 		widget._processor()	
 		
 		equal($('#yournameisjesse').is(':visible'), false, 'rule ran ran _processor, ran fal')
+		
+		
+		//checkbox not-checked test
+		equal($('#spamWrapper').is(':visible'), false, 'checkbox rule, spam is hidden')
+		
+		
+		
+		
 	})
 
 
 
 	
 	test('addCondition and remove', function(){
+		expect( 2 )
 		this.widget.addCondition({
 			name: 'newC',
 			rules: [],
@@ -72,16 +100,17 @@
 			fal: []
 		})
 		
-		equal( this.widget.options.conditions.length, 2 ,'condition added')
+		equal( this.widget.options.conditions.length, 3 ,'condition added')
 		
 		this.widget.removeCondition('newC')
 		
-		equal( this.widget.options.conditions.length, 1 ,'condition removed')
+		equal( this.widget.options.conditions.length, 2 ,'condition removed')
 	})
 	
 	
 	
 	test('condition test when target isnt present in the dom', function(){
+		expect( 1 )
 		var widget = this.widget
 		
 		this.widget.addCondition({
