@@ -102,7 +102,27 @@ $.widget('jb.formConditions',{
     	},
     	'doesnt-contain': function( val, rule, element ){
     		return !$.jb.formConditions.prototype.operators.contains.apply( this, arguments )
-    	}
+    	},
+    	//starts with
+    	'starts-with': function( val, rule, element ){
+    		var regEx = new RegExp( '^('+ rule.value +')' ,'gi');
+    		return regEx.test( val );	
+    	},
+    	'dosent-start-with': function( val, rule, element ){
+    		var regEx = new RegExp( '^('+ rule.value +')' ,'gi');
+    		return !regEx.test( val );	
+    	},
+    	
+    	'ends-with': function( val, rule, element ){
+    		var regEx = new RegExp( '('+ rule.value +')$' ,'gi');
+    		return regEx.test( val );	
+    	},
+    	
+    	'dosent-end-with': function( val, rule, element ){
+    		var regEx = new RegExp( '('+ rule.value +')$' ,'gi');
+    		return !regEx.test( val );	
+    	},
+    	
     },
     _create: function(){
         var self = this,
