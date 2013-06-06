@@ -108,7 +108,7 @@ $.widget('jb.formConditions',{
     		var regEx = new RegExp( '^('+ rule.value +')' ,'gi');
     		return regEx.test( val );	
     	},
-    	'dosent-start-with': function( val, rule, element ){
+    	'doesnt-start-with': function( val, rule, element ){
     		var regEx = new RegExp( '^('+ rule.value +')' ,'gi');
     		return !regEx.test( val );	
     	},
@@ -118,7 +118,7 @@ $.widget('jb.formConditions',{
     		return regEx.test( val );	
     	},
     	
-    	'dosent-end-with': function( val, rule, element ){
+    	'doesnt-end-with': function( val, rule, element ){
     		var regEx = new RegExp( '('+ rule.value +')$' ,'gi');
     		return !regEx.test( val );	
     	},
