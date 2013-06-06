@@ -38,15 +38,15 @@
 		
 		//doesnt start with
 		equal( operators['doesnt-start-with'].apply( this,['cookies',{value:'cook'}]), false,'doesnt-start-with - exp false')
-		equal( operators['doesnt-start-with'].apply( this,['free cookies',{value:'cook'}]), true,'doesnt-start-with - exp true')
+		equal( operators['doesnt-start-with'].apply( this,['free cookies',{value:'cook$'}]), true,'doesnt-start-with - exp true')
 		
 		//ends-with
 		equal( operators['ends-with'].apply( this,['cookies',{value:'ies'}]), true,'ends-with - exp true')
-		equal( operators['ends-with'].apply( this,['free cookies',{value:'cook'}]), false,'ends-with - exp false')
+		equal( operators['ends-with'].apply( this,['free cookies',{value:'cook.['}]), false,'ends-with - exp false')
 		
 		
 		//dosent-end-with
-		equal( operators['doesnt-end-with'].apply( this,['cookies',{value:'ie'}]), true,'doesnt-end-with')
+		equal( operators['doesnt-end-with'].apply( this,['cookies',{value:'ie$'}]), true,'doesnt-end-with')
 		
 		
 		
