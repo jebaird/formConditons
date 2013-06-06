@@ -23,7 +23,11 @@ TODO: add support in outcome and rule for callback,
     //helpers
     var toLower = function( string ){
     		return String.prototype.toLowerCase.apply( string )
-    	}
+    },
+    //stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex/6969486#6969486
+    escapeRegExp = function(str) {
+    	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+	};
     
     
     
@@ -105,21 +109,21 @@ $.widget('jb.formConditions',{
     	},
     	//starts with
     	'starts-with': function( val, rule, element ){
-    		var regEx = new RegExp( '^('+ rule.value +')' ,'gi');
+    		var regEx = new RegExp( '^('+ ( escapeRegExp( rule.value )  ) +')' ,'gi');
     		return regEx.test( val );	
     	},
     	'doesnt-start-with': function( val, rule, element ){
-    		var regEx = new RegExp( '^('+ rule.value +')' ,'gi');
+    		var regEx = new RegExp( '^('+ ( escapeRegExp( rule.value )  ) +')' ,'gi');
     		return !regEx.test( val );	
     	},
     	
     	'ends-with': function( val, rule, element ){
-    		var regEx = new RegExp( '('+ rule.value +')$' ,'gi');
+    		var regEx = new RegExp( '('+ ( escapeRegExp( rule.value )  ) +')$' ,'gi');
     		return regEx.test( val );	
     	},
     	
     	'doesnt-end-with': function( val, rule, element ){
-    		var regEx = new RegExp( '('+ rule.value +')$' ,'gi');
+    		var regEx = new RegExp( '('+ ( escapeRegExp( rule.value )  ) +')$' ,'gi');
     		return !regEx.test( val );	
     	},
     	
