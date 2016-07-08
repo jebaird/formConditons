@@ -201,9 +201,10 @@ $.widget('jb.formConditions',{
         		target = $elem.find( rule.selector ),
         		operator = $.jb.formConditions.prototype.operators[ rule.operator ];
         		
-        	//target isn't in the form	
+        	//target isn't in the form, fail
         	if( target.length == 0 ){
-        		continue;
+        		ruleIsTrue = false;
+                	break;
         	}
 
 
